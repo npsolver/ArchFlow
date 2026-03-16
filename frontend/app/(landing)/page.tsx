@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Logo from "../../public/logo.png"
 
-export default function Page() {
+export default function LandingPage() {
 	return (
 		<div>
 			<Image
