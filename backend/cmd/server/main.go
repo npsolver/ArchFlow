@@ -28,18 +28,24 @@ func main() {
 		MaxAge:           12 * time.Hour,
 	}))
 
+	// handle all OPTIONS requests
+	r.OPTIONS("/*path", func(c *gin.Context) {
+		c.Status(204)
+	})
+
 	api := r.Group("/api")
-
-	authRoutes := api.Group("/auth")
 	{
-		authRoutes.POST("/signup", auth.Signup)
-		authRoutes.POST("/login", auth.Login)
-	}
+		authRoutes := api.Group("/auth")
+		{
+			authRoutes.POST("/signup", auth.Signup)
+			authRoutes.POST("/login", auth.Login)
+		}
 
-	protected := api.Group("/projects")
-	protected.Use(auth.AuthMiddleware())
-	{
-		protected.GET("/", GetProjects)
+		protected := api.Group("/projects")
+		protected.Use(auth.AuthMiddleware())
+		{
+			protected.GET("/", GetProjects)
+		}
 	}
 
 	r.Run(":8080")
