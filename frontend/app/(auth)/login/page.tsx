@@ -1,15 +1,19 @@
 "use client"
 
-import { useState, ChangeEvent, SubmitEvent } from "react"
+import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { useState, ChangeEvent, SubmitEvent, useEffect } from "react"
+
+import { login } from "@/lib/api/auth";
 
 interface FormData {
-	username: string;
+	email: string;
 	password: string;
 }
 
 export default function Login() {
 
-	const [formData, setFormData] = useState<FormData>({ username: '', password: '' });
+	const [formData, setFormData] = useState<FormData>({ email: '', password: '' });
 
 	// 3. Handle input changes
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,20 +25,32 @@ export default function Login() {
 	};
 
 	// 4. Handle form submission
-	const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+	async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault(); // Prevents page reload
-		console.log('Form Submitted:', formData);
-		// Send data to backend or process it further
+
+		try {
+			const fetchedToken = await login(formData.email, formData.password);
+			console.log(fetchedToken)
+			alert("Login successful");
+			redirect("/")
+		} catch (err) {
+			if (isRedirectError(err)) {
+				throw err; // Re-throw the redirect error
+			}
+			console.log(err)
+			alert("Login failed");
+		}
+
 	};
 
 	return (
 		<form onSubmit={handleSubmit}>
 			<label>
-				Username:
+				Email:
 				<input
 					type="text"
-					name="username"
-					value={formData.username}
+					name="email"
+					value={formData.email}
 					onChange={handleInputChange}
 				/>
 			</label>
