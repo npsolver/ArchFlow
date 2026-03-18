@@ -2,7 +2,9 @@ export async function apiFetch(url: string, options: RequestInit = {}) {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-	const response = await fetch(`http://localhost:8080${url}`, {
+	const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+
+	const response = await fetch(`${API_BASE}${url}`, {
 		...options,
 		headers: {
 			"Content-Type": "application/json",

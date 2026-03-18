@@ -1,0 +1,52 @@
+
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: archflow_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: archflow
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: archflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  migrate:
+    image: migrate/migrate
+    container_name: archflow_migrate
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend/migrations:/migrations
+    command:
+      [
+        "-path", "/migrations",
+        "-database", "postgres://archflow:password@postgres:5432/archflow?sslmode=disable",
+        "up"
+      ]
+
+  backend:
+    build: ./backend
+    container_name: archflow_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - migrate
+    environment:
+      DATABASE_URL: postgres://archflow:password@postgres:5432/archflow?sslmode=disable
+
+  frontend:
+    build: ./frontend
+    container_name: archflow_frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
