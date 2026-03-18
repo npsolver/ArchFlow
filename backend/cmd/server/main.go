@@ -7,8 +7,8 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
-	"github.com/npsolver/archflow/backend/internal/auth"
-	"github.com/npsolver/archflow/backend/internal/database"
+	"github.com/npsolver/ArchFlow/backend/internal/auth"
+	"github.com/npsolver/ArchFlow/backend/internal/database"
 )
 
 func main() {

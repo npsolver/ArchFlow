@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/npsolver/archflow/backend/internal/database"
+	"github.com/npsolver/ArchFlow/backend/internal/database"
 )
 
 type LoginRequest struct {

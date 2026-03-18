@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"github.com/npsolver/archflow/backend/internal/database"
+	"github.com/npsolver/ArchFlow/backend/internal/database"
 )
 
 type SignupRequest struct {

@@ -1,4 +1,4 @@
-module github.com/npsolver/archflow/backend
+module github.com/npsolver/ArchFlow/backend
 
 go 1.25.0
 
