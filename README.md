@@ -1,4 +1,4 @@
-# 🚀 ArchFlow
+<h6 align="center"> <img src="https://github.com/npsolver/ArchFlow/blob/master/frontend/public/logo.png" width=400 height=400 /></h6>
 
 ArchFlow is an interactive system design platform that allows users to create, visualize, and manage architecture diagrams through a modern web interface.
 
