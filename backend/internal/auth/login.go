@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/npsolver/ArchFlow/backend/internal/database"
@@ -15,7 +17,10 @@ func Login(c *gin.Context) {
 
 	var req LoginRequest
 
-	c.ShouldBindJSON(&req)
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	var id string
 	var hash string
