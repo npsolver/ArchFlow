@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:15
     container_name: archflow_postgres
-    restart: always
+    # restart: always
     environment:
       POSTGRES_USER: archflow
       POSTGRES_PASSWORD: password
@@ -42,7 +42,7 @@ services:
   frontend:
     build: ./frontend
     container_name: archflow_frontend
-    restart: always
+    # restart: always
     depends_on:
       - backend
     ports:
