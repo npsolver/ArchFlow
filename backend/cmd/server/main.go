@@ -47,16 +47,10 @@ func main() {
 		protected := api.Group("/projects")
 		protected.Use(auth.AuthMiddleware())
 		{
-			protected.GET("/", GetProjects)
+			protected.GET("/", database.GetProjects)
+			protected.POST("/addproject", database.AddProject)
 		}
 	}
 
 	r.Run(":8080")
-}
-
-func GetProjects(c *gin.Context) {
-
-	c.JSON(200, gin.H{
-		"message": "authenticated user",
-	})
 }
