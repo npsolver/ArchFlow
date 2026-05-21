@@ -6,27 +6,25 @@ import (
 	"os"
 	"time"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-var DB *pgx.Conn
+var DB *pgxpool.Pool
 
 func Connect() error {
 
-	var conn *pgx.Conn
 	var err error
 
 	databaseURL := os.Getenv("DATABASE_URL")
 
 	for i := 0; i < 10; i++ {
 
-		log.Println("Attempting database connection")
+		log.Println("Attempting database pool creation")
 
-		conn, err = pgx.Connect(context.Background(), databaseURL)
+		DB, err = pgxpool.New(context.Background(), databaseURL)
 
 		if err == nil {
-			DB = conn
-			log.Println("Database connection successful")
+			log.Println("Database pool creation successful")
 			return nil
 		}
 
@@ -34,5 +32,6 @@ func Connect() error {
 		time.Sleep(2 * time.Second)
 	}
 
+	log.Fatal("unable to create pool: ", err)
 	return err
 }
