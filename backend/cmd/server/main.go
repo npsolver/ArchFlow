@@ -47,7 +47,7 @@ func main() {
 		protected := api.Group("/projects")
 		protected.Use(auth.AuthMiddleware())
 		{
-			protected.GET("/", database.GetProjects)
+			protected.GET("", database.GetProjects)
 			protected.POST("/addproject", database.AddProject)
 		}
 	}

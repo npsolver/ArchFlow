@@ -1,8 +1,6 @@
 package database
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
@@ -27,18 +25,13 @@ func GetProjects(c *gin.Context) {
 		return
 	}
 
-	rows, err := DB.Query(
+	rows, _ := DB.Query(
 		c,
 		`SELECT title
 		 FROM diagrams
 		 WHERE user_id=$1`,
 		user_id,
 	)
-
-	if err != nil {
-		c.JSON(401, gin.H{"error": "invalid credentials"})
-		return
-	}
 
 	titles, err := pgx.CollectRows(rows, pgx.RowTo[string])
 
@@ -78,8 +71,6 @@ func AddProject(c *gin.Context) {
 	).Scan(&user_id)
 
 	if err != nil {
-		fmt.Println("Printing errors")
-		fmt.Println(err)
 		c.JSON(401, gin.H{"error": "invalid credentials"})
 		return
 	}
