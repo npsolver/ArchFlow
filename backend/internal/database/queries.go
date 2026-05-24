@@ -28,7 +28,7 @@ func GetProjects(c *gin.Context) {
 	rows, _ := DB.Query(
 		c,
 		`SELECT title
-		 FROM diagrams
+		 FROM projects
 		 WHERE user_id=$1`,
 		user_id,
 	)
@@ -41,7 +41,7 @@ func GetProjects(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{
-		"diagrams": titles,
+		"projects": titles,
 	})
 	return
 }
@@ -79,7 +79,7 @@ func AddProject(c *gin.Context) {
 
 	_, err = DB.Exec(
 		c,
-		`INSERT INTO diagrams (id,user_id,title)
+		`INSERT INTO projects (id,user_id,title)
 		 VALUES ($1,$2,$3)`,
 		id,
 		user_id,
@@ -87,7 +87,7 @@ func AddProject(c *gin.Context) {
 	)
 
 	if err != nil {
-		c.JSON(500, gin.H{"error": "diagrams creation failed"})
+		c.JSON(500, gin.H{"error": "projects creation failed"})
 		return
 	}
 

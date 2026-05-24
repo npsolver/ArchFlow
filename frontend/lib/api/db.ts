@@ -5,7 +5,7 @@ export async function getprojects(email: string) {
         method: "GET",
     });
 
-    return data.diagrams;
+    return data.projects;
 }
 
 export async function addproject(email: string, title: string) {
